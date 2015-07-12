@@ -12,6 +12,9 @@ vows.describe('ensure_named_args').addBatch({
             fn()
             fn('text')
             fn(msg = 'text')
+            fn(99, msg = 'text')
+            fn(num = 99, msg = 'text', 'bob')
+            fn(num = 99, msg = 'text', name = 'bob')
         '''
         ###
             console.log('this should fail')
@@ -33,7 +36,7 @@ vows.describe('ensure_named_args').addBatch({
         'can be forbidden' : (source) ->
             errors = coffeelint.lint(source, {ensure_named_args: {'level':'error'}})
             assert.isArray(errors)
-            assert.lengthOf(errors, 3) # works on number of errors given topics test above
+            assert.lengthOf(errors, 2) # works on number of errors given topics test above
             error = errors[0]
             assert.equal(error.lineNumber, 1)
             assert.equal(error.rule, 'ensure_named_args')
