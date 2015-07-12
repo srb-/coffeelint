@@ -9,10 +9,18 @@ vows.describe('ensure_named_args').addBatch({
     'Named args' :
 
         topic : '''
+            fn()
+            fn('text')
+            fn(msg = 'text')
+        '''
+        ###
             console.log('this should fail')
             console.log(msg = 'this should pass')
             console.log('this should fail too', 999)
-            '''
+            fn1(fn2('test'))
+            fn1(fn2(msg = 'test'))
+            fn1(translatedMsg = fn2(msg = 'test'))
+            '''###
 
         'are permitted by default' : (source) ->
             console.log 'hereerer in test!!!!'
@@ -25,7 +33,7 @@ vows.describe('ensure_named_args').addBatch({
         'can be forbidden' : (source) ->
             errors = coffeelint.lint(source, {ensure_named_args: {'level':'error'}})
             assert.isArray(errors)
-            assert.lengthOf(errors, 1)
+            assert.lengthOf(errors, 3) # works on number of errors given topics test above
             error = errors[0]
             assert.equal(error.lineNumber, 1)
             assert.equal(error.rule, 'ensure_named_args')
