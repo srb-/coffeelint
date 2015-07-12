@@ -30,7 +30,7 @@ module.exports = class EnsureNamedArgs
         while(not done)
 
             token = tokenApi.peek(i)?[0]
-            #console.log token
+            console.log token
             if not token? then done = true
 
 
@@ -45,10 +45,10 @@ module.exports = class EnsureNamedArgs
                     argsWithoutName++ if token is ','
                     argsWithoutName-- if token is '='
 
-            else
-                # skip over recursive call starts - linter will get it later
-                callStarts++ if token is 'CALL_START'
-                callStarts-- if token is 'CALL_END'
+
+            # skip over recursive call starts - linter will get it later
+            callStarts++ if token is 'CALL_START'
+            callStarts-- if token is 'CALL_END'
 
             i = i + 1
 
