@@ -11,4 +11,4 @@ fn2 = (y, x) ->
   x + 4
   y - 3
 
-fn2(x = 33, mod = fn1(y = 'bob'))
+fn2(x = 33, mod = fn1(c, 44, 'bob'), 55)

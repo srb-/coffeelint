@@ -10,6 +10,8 @@ vows.describe('ensure_named_args').addBatch({
 
         topic : '''
             fn(result = fn2(ycoord = 33, xcoord = fn3()))
+            fn(99, msg = 'text')
+            fn(num = 99, msg = 'text', 'bob')
         '''
         ###
 

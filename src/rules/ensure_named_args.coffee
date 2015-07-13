@@ -3,16 +3,13 @@ module.exports = class EnsureNamedArgs
 
     rule:
         name: 'ensure_named_args'
-        level : 'ignore'
-        message : 'Calling a function without naming each parameter is forbidden'
+        level : 'error'
+        message : 'Function called without naming each argument'
         description: """
-            This rule prohibits calling a function without first naming each parameter.
+            This rule prohibits calling a function without first naming each argument.
             """
 
-    #tokens: [ "++", "--" ]
     tokens: ['CALL_START']
-
-
 
     # return true if error found
     lintToken : (token, tokenApi) ->
@@ -51,7 +48,39 @@ module.exports = class EnsureNamedArgs
             i = i + 1
 
         #console.log not allArgumentsNamed
-        return not allArgumentsNamed # if false then error
+        #return not allArgumentsNamed # if false then error
+        if not allArgumentsNamed
+            return { context: "#{argsWithoutName} argument(s) not named" }
+        else
+            return null
+
+
+
+
+  # COOL way of doing desctructuring, and error assignment!!
+
+  # lintToken: (token, tokenApi) ->
+  #   {forbidden} = tokenApi.config[@rule.name]
+
+  #   # Determine the token's original keyword.
+  #   [type, value, pos] = token
+  #   line = tokenApi.lines[tokenApi.lineNumber]
+  #   keyword = line[pos.first_column..pos.last_column]
+
+  #   # Error if the keyword is in the rules.forbidden hash.
+  #   if keyword of forbidden
+  #     replacement = forbidden[keyword]
+  #     error =
+  #       message: if replacement?
+  #         "The \"#{keyword}\" keyword is forbidden. Use \"#{replacement}\" instead"
+  #       else
+  #         "The \"#{keyword}\" keyword is forbidden"
+  #     return error
+  #   return
+
+
+
+
 
         # true means it was found
 
@@ -99,21 +128,21 @@ module.exports = class EnsureNamedArgs
         ###
 
 
-    recursiveCheckArgs: (i, tokenApi) ->
+    # recursiveCheckArgs: (i, tokenApi) ->
 
-        token = tokenApi.peek(i)?[0]
-        argCountStack = 0
+    #     token = tokenApi.peek(i)?[0]
+    #     argCountStack = 0
 
-        while(token? and token is not 'CALL_END')
+    #     while(token? and token is not 'CALL_END')
 
-            argCountStack++ if token is ','
-            argCountStack-- if token is '='
+    #         argCountStack++ if token is ','
+    #         argCountStack-- if token is '='
 
-            if token is 'CALL_START'
-                i = recursiveCheckArgs(i + 1, tokenApi)
+    #         if token is 'CALL_START'
+    #             i = recursiveCheckArgs(i + 1, tokenApi)
 
-            i = i + 1
-            token = tokenApi.peek(i)?[0]
+    #         i = i + 1
+    #         token = tokenApi.peek(i)?[0]
 
 
-        if argCountStack not 0 then return -1 else return i
+    #     if argCountStack not 0 then return -1 else return i
