@@ -6,7 +6,7 @@ coffeelint = require path.join('..', 'lib', 'coffeelint')
 
 vows.describe('ensure_named_args').addBatch({
 
-    'Named args' :
+    'Named args':
 
         topic : '''
             fn(result = fn2(ycoord = 33, xcoord = fn3()))

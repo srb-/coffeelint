@@ -4,11 +4,9 @@ module.exports = class EnsureNamedArgs
     rule:
         name: 'ensure_named_args'
         level : 'ignore'
-        message : 'STEVE'
+        message : 'Calling a function without naming each parameter is forbidden'
         description: """
-
-                STEVEE
-            This rule is disabled by default.
+            This rule prohibits calling a function without first naming each parameter.
             """
 
     #tokens: [ "++", "--" ]
@@ -18,7 +16,7 @@ module.exports = class EnsureNamedArgs
 
     # return true if error found
     lintToken : (token, tokenApi) ->
-        console.log '\n\nIN rule!!!, return true if error is found\n'
+        #console.log '\n\nIN rule!!!, return true if error is found\n'
 
         callStarts = 0
         argsWithoutName = 0
@@ -30,7 +28,7 @@ module.exports = class EnsureNamedArgs
         while(not done)
 
             token = tokenApi.peek(i)?[0]
-            console.log token
+            #console.log token
             if not token? then done = true
 
 
@@ -52,7 +50,7 @@ module.exports = class EnsureNamedArgs
 
             i = i + 1
 
-        console.log not allArgumentsNamed
+        #console.log not allArgumentsNamed
         return not allArgumentsNamed # if false then error
 
         # true means it was found

@@ -6,7 +6,7 @@
         "level": "error"
     },
     "indentation": {
-        "value": 4
+        "value": 2
     },
     "space_operators": {
         "level": "error"
@@ -16,6 +16,10 @@
         "level": "warn"
     },
     "no_debugger": {
+        "level": "error",
+        "console": true
+    },
+    "ensure_named_args": {
         "level": "error",
         "console": true
     }
